@@ -20,8 +20,7 @@ public final class FileProcessing {
                 fileContents.add(line);
             }
         } catch (IOException e) {
-            System.out.println("Cannot read file...");
-            e.printStackTrace();
+            System.out.println("Cannot read file...\n" + e);
         }
         return fileContents;
     }

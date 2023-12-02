@@ -1,14 +1,18 @@
 package com.aoc.year2023.utils;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.PrintStream;
 import java.util.List;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -29,6 +33,21 @@ class FileProcessingTest {
         List<String> contents = FileProcessing.readFile(absolutePath);
 
         assertEquals(expectedLinesNumber, contents.size());
+    }
+
+    @Test
+    void testReadFile_Invalid() {
+        String nonExistentFile = "path/to/nonexistent/file.txt";
+        String nonExistentFilePath = new File(nonExistentFile).getAbsolutePath();
+
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        PrintStream printStream = new PrintStream(outputStream);
+        System.setOut(printStream);
+
+        FileProcessing.readFile(nonExistentFilePath);
+
+        String printedOutput = outputStream.toString();
+        assertTrue(printedOutput.contains("Cannot read file..."), "Expected message not found in output.");
     }
 
     @ParameterizedTest
