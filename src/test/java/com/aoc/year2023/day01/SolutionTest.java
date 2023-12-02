@@ -1,5 +1,6 @@
 package com.aoc.year2023.day01;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
@@ -17,9 +18,15 @@ class SolutionTest {
     private static final String testTask1URI = resourcesTestURI + "year2023/day01/test_1.txt";
     private static final String testTask2URI = resourcesTestURI + "year2023/day01/test_2.txt";
 
+    private Solution solution;
+
+    @BeforeEach
+    void setUp() {
+        solution = new Solution();
+    }
+
     @Test
     void testSolverThrows() {
-        Solution solution = new Solution();
         String absolutePath = solution.getAbsolutePathFromUriString(inputFileURI);
         List<String> calibrationDocument = solution.readFile(absolutePath);
 
@@ -29,7 +36,6 @@ class SolutionTest {
     @ParameterizedTest
     @MethodSource("solverDataSource")
     void testSolver(String partNum, String inputFilePath, int expectedAnswer) {
-        Solution solution = new Solution();
         String absolutePath = solution.getAbsolutePathFromUriString(inputFilePath);
         List<String> calibrationDocument = solution.readFile(absolutePath);
 
@@ -41,8 +47,6 @@ class SolutionTest {
     @ParameterizedTest
     @MethodSource("calibrationValueWithTextDataSource")
     void testGetCalibrationValueWithText(String calibrationLine, int expectedCalibrationValue) {
-        Solution solution = new Solution();
-
         int calibrationValue = solution.getCalibrationValueWithText(calibrationLine);
 
         assertEquals(expectedCalibrationValue, calibrationValue);
@@ -51,8 +55,6 @@ class SolutionTest {
     @ParameterizedTest
     @MethodSource("calibrationValueDataSource")
     void testGetCalibrationValue(String calibrationLine, int expectedCalibrationValue) {
-        Solution solution = new Solution();
-
         int calibrationValue = solution.getCalibrationValue(calibrationLine);
 
         assertEquals(expectedCalibrationValue, calibrationValue);
@@ -61,7 +63,6 @@ class SolutionTest {
     @ParameterizedTest
     @MethodSource("filesDataSource")
     void testReadFile(String filePath, int expectedLinesNumber) {
-        Solution solution = new Solution();
         String absolutePath = solution.getAbsolutePathFromUriString(filePath);
 
         List<String> contents = solution.readFile(absolutePath);

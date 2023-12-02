@@ -39,15 +39,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>3.2.2</version>
-                <configuration>
-                    <includes>
-                        <include>**/*_UT.java</include>
-                    </includes>
-                    <excludes>
-                        <exclude>**/BaseTest.java</exclude>
-                        <exclude>**/TestsUtil.java</exclude>
-                    </excludes>
-                </configuration>
             </plugin>
         </plugins>
     </build>
