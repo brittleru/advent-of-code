@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Solution {
-    private static final String resourcesURI = "src/main/resources/";
+    private static final String puzzleResourceURI = "src/main/resources/year2023/day01/input.txt";
     private static final Map<String, Integer> strNumToNum = Map.ofEntries(
             Map.entry("one", 1),
             Map.entry("two", 2),
@@ -25,8 +25,7 @@ public class Solution {
     public static void main(String[] args) {
         Solution solution = new Solution();
 
-        String path = resourcesURI + "year2023/day01/input.txt";
-        String absolutePath = FileProcessing.getAbsolutePathFromUriString(path);
+        String absolutePath = FileProcessing.getAbsolutePathFromUriString(puzzleResourceURI);
         System.out.println("Reading the input file from: " + absolutePath);
 
         List<String> calibrationDocument = FileProcessing.readFile(absolutePath);
