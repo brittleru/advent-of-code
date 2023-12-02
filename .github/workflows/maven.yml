@@ -29,24 +29,3 @@ jobs:
         cache: maven
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-
-  coverage:
-    runs-on: ubuntu-latest
-    name: Generate test coverage badge
-    steps:
-
-      - name: Generate a coverage value
-        id: coverage
-        # Generates a GitHub Workflow output named `lines`
-        run: |
-          COVERAGE="$( parse-coverage-report )"
-          echo "##[set-output name=lines;]${COVERAGE}%"
-
-      # Use the output from the `coverage` step
-      - name: Generate the badge SVG image
-        uses: emibcn/badge-action@v1
-        with:
-          label: 'Test coverage'
-          status: ${{ steps.coverage.outputs.lines }}
-          color: 'blue,555,daf'
-          path: badge.svg
