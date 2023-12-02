@@ -1,3 +1,5 @@
+![Build](https://github.com/brittleru/advent-of-code/actions/workflows/maven.yml/badge.svg)
+
 # Advent of Code with Java
 
 Java solutions for [Advent of Code](https://adventofcode.com/) challenges.
