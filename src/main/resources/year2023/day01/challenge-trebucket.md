@@ -38,6 +38,7 @@ Adding these together produces **142**.
 
 Consider your entire calibration document. **What is the sum of all of the calibration values?**
 
+**[Calibration document can be found here](input.txt).**
 
 ### -- Part Two -- 
 Your calculation isn't quite right. It looks like some of the digits are actually **spelled out with letters**: 
