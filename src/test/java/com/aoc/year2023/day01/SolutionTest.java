@@ -1,5 +1,6 @@
 package com.aoc.year2023.day01;
 
+import com.aoc.year2023.utils.FileProcessing;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -27,8 +28,8 @@ class SolutionTest {
 
     @Test
     void testSolverThrows() {
-        String absolutePath = solution.getAbsolutePathFromUriString(inputFileURI);
-        List<String> calibrationDocument = solution.readFile(absolutePath);
+        String absolutePath = FileProcessing.getAbsolutePathFromUriString(inputFileURI);
+        List<String> calibrationDocument = FileProcessing.readFile(absolutePath);
 
         assertThrows(RuntimeException.class, () -> solution.solve("NOT EXISTENT PART", calibrationDocument));
     }
@@ -36,8 +37,8 @@ class SolutionTest {
     @ParameterizedTest
     @MethodSource("solverDataSource")
     void testSolver(String partNum, String inputFilePath, int expectedAnswer) {
-        String absolutePath = solution.getAbsolutePathFromUriString(inputFilePath);
-        List<String> calibrationDocument = solution.readFile(absolutePath);
+        String absolutePath = FileProcessing.getAbsolutePathFromUriString(inputFilePath);
+        List<String> calibrationDocument = FileProcessing.readFile(absolutePath);
 
         int result = solution.solve(partNum, calibrationDocument);
 
@@ -58,16 +59,6 @@ class SolutionTest {
         int calibrationValue = solution.getCalibrationValue(calibrationLine);
 
         assertEquals(expectedCalibrationValue, calibrationValue);
-    }
-
-    @ParameterizedTest
-    @MethodSource("filesDataSource")
-    void testReadFile(String filePath, int expectedLinesNumber) {
-        String absolutePath = solution.getAbsolutePathFromUriString(filePath);
-
-        List<String> contents = solution.readFile(absolutePath);
-
-        assertEquals(expectedLinesNumber, contents.size());
     }
 
     private static Stream<Arguments> solverDataSource() {
@@ -104,11 +95,5 @@ class SolutionTest {
         );
     }
 
-    private static Stream<Arguments> filesDataSource() {
-        return Stream.of(
-                Arguments.of(testTask1URI, 4),
-                Arguments.of(testTask2URI, 7),
-                Arguments.of(inputFileURI, 1000)
-        );
-    }
+
 }

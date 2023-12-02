@@ -1,10 +1,9 @@
 package com.aoc.year2023.day01;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
-import java.util.ArrayList;
+import com.aoc.year2023.utils.FileProcessing;
+import com.aoc.year2023.utils.InfoDisplay;
+import com.aoc.year2023.utils.TextProcessing;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,13 +26,13 @@ public class Solution {
         Solution solution = new Solution();
 
         String path = resourcesURI + "year2023/day01/input.txt";
-        String absolutePath = solution.getAbsolutePathFromUriString(path);
+        String absolutePath = FileProcessing.getAbsolutePathFromUriString(path);
         System.out.println("Reading the input file from: " + absolutePath);
 
-        List<String> calibrationDocument = solution.readFile(absolutePath);
+        List<String> calibrationDocument = FileProcessing.readFile(absolutePath);
         System.out.printf("Done reading %d lines.\n", calibrationDocument.size());
 
-        solution.displayWelcome(1, "Trebuchet?!");
+        InfoDisplay.displayWelcome(1, "Trebuchet?!");
 
         int resultTask1 = solution.solve("One", calibrationDocument);
         System.out.println("The sum of all the calibration values is: " + resultTask1);
@@ -83,7 +82,7 @@ public class Solution {
         String[] lineCharacters = calibrationDocumentLine.split("");
 
         for (String character : lineCharacters) {
-            if (isInteger(character)) {
+            if (TextProcessing.isInteger(character)) {
                 calibrationValue.append(character);
             }
         }
@@ -92,8 +91,7 @@ public class Solution {
             return Integer.parseInt(calibrationValue.append(calibrationValue).toString());
         } else if (calibrationValue.length() == 2) {
             return Integer.parseInt(calibrationValue.toString());
-        }
-        else if (calibrationValue.length() == 0) {
+        } else if (calibrationValue.length() == 0) {
             return 0;
         }
 
@@ -103,34 +101,5 @@ public class Solution {
         return Integer.parseInt(result);
     }
 
-    public List<String> readFile(final String filePath) {
-        List<String> fileContents = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                fileContents.add(line);
-            }
-        } catch (IOException e) {
-            System.out.println("Cannot read file...");
-            e.printStackTrace();
-        }
-        return fileContents;
-    }
 
-    public String getAbsolutePathFromUriString(String uri) {
-        return new File(uri).getAbsolutePath();
-    }
-
-    private void displayWelcome(int dayNumber, String challengeName) {
-        System.out.printf("\n--- Welcome to Day %2d of AoC 2023: %s ---\n", dayNumber, challengeName);
-    }
-
-    private boolean isInteger(String possibleIntegerAsString) {
-        try {
-            Integer.parseInt(possibleIntegerAsString);
-            return true;
-        } catch (Exception e) {
-            return false;
-        }
-    }
 }
