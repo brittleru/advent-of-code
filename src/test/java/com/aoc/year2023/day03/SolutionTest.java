@@ -12,7 +12,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SolutionTest {
 
@@ -44,7 +44,7 @@ class SolutionTest {
         String row = "467..114..";
         String[] rowTokens = row.split("");
         int rowIndex = 0;
-        int[] indices = new int[] {0, 1, 2};
+        int[] indices = new int[]{0, 1, 2};
         SortedSet<Integer> digitIndices = new TreeSet<>();
         for (int index : indices) {
             digitIndices.add(index);
@@ -65,7 +65,7 @@ class SolutionTest {
     void testConvertIndicesAndRowToInteger() {
         String row = "467..114..";
         String[] rowTokens = row.split("");
-        int[] indices = new int[] {0, 1, 2};
+        int[] indices = new int[]{0, 1, 2};
         SortedSet<Integer> digitIndices = new TreeSet<>();
         for (int index : indices) {
             digitIndices.add(index);
@@ -100,11 +100,11 @@ class SolutionTest {
 
     private static Stream<Arguments> processEngineSchematicRowForDigitDataSource() {
         return Stream.of(
-                Arguments.of("467..114..", new int[] {0, 1, 2}, true, false),
-                Arguments.of("467..114..", new int[] {5, 6, 7}, true, false),
-                Arguments.of("617*......", new int[] {0, 1, 2}, true, true),
-                Arguments.of("%664.598^.", new int[] {1, 2, 3}, true, true),
-                Arguments.of("%664.598^.", new int[] {5, 6, 7}, true, true)
+                Arguments.of("467..114..", new int[]{0, 1, 2}, true, false),
+                Arguments.of("467..114..", new int[]{5, 6, 7}, true, false),
+                Arguments.of("617*......", new int[]{0, 1, 2}, true, true),
+                Arguments.of("%664.598^.", new int[]{1, 2, 3}, true, true),
+                Arguments.of("%664.598^.", new int[]{5, 6, 7}, true, true)
         );
     }
 

@@ -8,14 +8,11 @@ import java.util.*;
 public class Solution {
 
     private static final String puzzleResourceURI = "src/main/resources/year2023/day03/input.txt";
-    private static final String puzzleResourceURI2 = "src/test/resources/year2023/day03/test_1.txt";
-
-    // MUST BE: 544664
 
     public static void main(String[] args) {
         Solution solution = new Solution();
 
-        String absolutePath = FileProcessing.getAbsolutePathFromUriString(puzzleResourceURI2);
+        String absolutePath = FileProcessing.getAbsolutePathFromUriString(puzzleResourceURI);
         List<String> puzzleData = FileProcessing.readFile(absolutePath);
 
         int sumOfAllPartsInEngineSchematic = solution.solve(puzzleData, true);
