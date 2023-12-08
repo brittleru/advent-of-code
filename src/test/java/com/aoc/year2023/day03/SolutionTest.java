@@ -7,12 +7,11 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
-import java.util.List;
-import java.util.SortedSet;
-import java.util.TreeSet;
+import java.util.*;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class SolutionTest {
 
@@ -24,6 +23,55 @@ class SolutionTest {
     @BeforeEach
     void setUp() {
         solution = new Solution();
+    }
+
+    @ParameterizedTest
+    @MethodSource("solvePartTwoDataSource")
+    void testSolvePartTwo(String filePathURI, int expectedResult) {
+        String absolutePath = FileProcessing.getAbsolutePathFromUriString(filePathURI);
+        List<String> engineSchematic = FileProcessing.readFile(absolutePath);
+
+        int actualResult = solution.solvePartTwo(engineSchematic, false);
+
+        assertEquals(expectedResult, actualResult);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getNumberAdjacentToStarDataSource")
+    void testGetNumberAdjacentToStar(String possiblePart, int starIndex, int expectedNumber) {
+        String[] possiblePartTokens = possiblePart.split("");
+
+        int actualNumber = solution.getNumberAdjacentToStar(possiblePartTokens, starIndex);
+
+        assertEquals(expectedNumber, actualNumber);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getPossiblePartRowsForStarDataSource")
+    void testGetPossiblePartRowsForStar(String filePathURI, Map<String, Integer> starData, int expectedSize) {
+        String absolutePath = FileProcessing.getAbsolutePathFromUriString(filePathURI);
+        List<String> engineSchematic = FileProcessing.readFile(absolutePath);
+
+        List<String> result = solution.getPossiblePartRowsForStar(engineSchematic, starData);
+
+        assertEquals(expectedSize, result.size());
+    }
+
+    @ParameterizedTest
+    @MethodSource("getStarsFromTheEngineSchematicDataSource")
+    void testGetStarsFromTheEngineSchematic(String filePathURI, int expectedSize) {
+        String absolutePath = FileProcessing.getAbsolutePathFromUriString(filePathURI);
+        List<String> engineSchematic = FileProcessing.readFile(absolutePath);
+
+        List<Map<String, Integer>> result = solution.getStarsFromTheEngineSchematic(engineSchematic);
+
+        for (Map<String, Integer> resultData : result) {
+            assertTrue(resultData.containsKey("rowIndex"));
+            assertTrue(resultData.containsKey("tokenIndex"));
+            assertEquals(2, resultData.size());
+        }
+
+        assertEquals(expectedSize, result.size());
     }
 
     @ParameterizedTest
@@ -89,6 +137,60 @@ class SolutionTest {
         boolean actualResult = solution.processEngineSchematicRowForDigit(rowTokens, digitIndices, isCurrent);
 
         assertEquals(expectedResult, actualResult);
+    }
+
+    private static Stream<Arguments> solvePartTwoDataSource() {
+        return Stream.of(
+                Arguments.of(inputFileURI, 84495585),
+                Arguments.of(testTask1URI, 467835)
+        );
+    }
+
+    private static Stream<Arguments> getNumberAdjacentToStarDataSource() {
+        return Stream.of(
+                Arguments.of("467..114..", 3, 467),
+                Arguments.of("..35..633.", 3, 35),
+                Arguments.of("617*......", 3, 617),
+                Arguments.of("......755.", 5, 755),
+                Arguments.of(".664.598..", 5, 598)
+        );
+    }
+
+    private static Stream<Arguments> getPossiblePartRowsForStarDataSource() {
+        return Stream.of(
+                Arguments.of(
+                        inputFileURI,
+                        Map.ofEntries(Map.entry("rowIndex", 1), Map.entry("tokenIndex", 13)),
+                        3
+                ),
+                Arguments.of(
+                        inputFileURI,
+                        Map.ofEntries(Map.entry("rowIndex", 139), Map.entry("tokenIndex", 41)),
+                        2
+                ),
+                Arguments.of(
+                        testTask1URI,
+                        Map.ofEntries(Map.entry("rowIndex", 1), Map.entry("tokenIndex", 4)),
+                        3
+                ),
+                Arguments.of(
+                        testTask1URI,
+                        Map.ofEntries(Map.entry("rowIndex", 4), Map.entry("tokenIndex", 3)),
+                        3
+                ),
+                Arguments.of(
+                        testTask1URI,
+                        Map.ofEntries(Map.entry("rowIndex", 8), Map.entry("tokenIndex", 5)),
+                        3
+                )
+        );
+    }
+
+    private static Stream<Arguments> getStarsFromTheEngineSchematicDataSource() {
+        return Stream.of(
+                Arguments.of(inputFileURI, 386),
+                Arguments.of(testTask1URI, 3)
+        );
     }
 
     private static Stream<Arguments> solveDataSource() {
